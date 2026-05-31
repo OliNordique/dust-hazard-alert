@@ -1,0 +1,25 @@
+name: Fetch HRDPS Weather
+
+on:
+  schedule:
+    - cron: '10 0,6,12,18 * * *'
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm install @supabase/supabase-js node-fetch
+
+      - run: node netlify/functions/fetch-hrdps.mjs
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SITE_LAT: ${{ secrets.SITE_LAT }}
+          SITE_LON: ${{ secrets.SITE_LON }}
