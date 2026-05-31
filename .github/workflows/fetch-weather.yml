@@ -13,9 +13,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
-      - run: npm install @supabase/supabase-js node-fetch
+      - run: npm install @supabase/supabase-js ws
 
       - run: node netlify/functions/fetch-hrdps.mjs
         env:
